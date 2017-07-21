@@ -1,0 +1,19 @@
+# **** Sentinel Configuration File ****
+bind 0.0.0.0
+protected-mode no
+port 26379
+daemonize yes
+logfile "/data/redis/logs/sentinel.log"
+dir /tmp
+
+{{if exists "/env/enable_config_command"}} enable_config_command {{getv "/env/enable_config_command"}} {{end}}
+
+sentinel monitor master 127.0.0.1 {{getv "/env/port"}} 2
+
+sentinel down-after-milliseconds master 4000
+sentinel failover-timeout master 60000
+sentinel parallel-syncs master 4
+sentinel client-reconfig-script master /opt/redis/notify.sh
+
+sentinel rename-config master e4f0a562e79846a0d3c4b95736e139b068545dbf
+sentinel rename-slaveof master 5ac1cc1194668f61557676025dca8a34db3110c4

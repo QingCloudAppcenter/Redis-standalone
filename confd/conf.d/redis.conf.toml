@@ -1,0 +1,7 @@
+[template]
+src = "redis.conf.tmpl"
+dest = "/data/redis/gen/redis.conf"
+keys = [
+    "/",
+]
+reload_cmd="/opt/redis/app.py restart"

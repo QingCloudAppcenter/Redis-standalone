@@ -1,0 +1,6 @@
+[template]
+src = "sentinel.conf.tmpl"
+dest = "/data/redis/gen/sentinel.conf"
+keys = [
+    "/",
+]

@@ -1,0 +1,43 @@
+aof-rewrite-incremental-fsync yes 
+appendfilename appendonly.aof 
+auto-aof-rewrite-percentage 60
+auto-aof-rewrite-min-size 64mb 
+bind 0.0.0.0
+client-output-buffer-limit normal 0 0 0
+client-output-buffer-limit pubsub 32mb 8mb 60
+client-output-buffer-limit slave 256mb 64mb 60 
+daemonize yes
+databases 16 
+dbfilename dump.rdb
+dir /data/redis
+hll-sparse-max-bytes 3000
+hz 10
+logfile /data/redis/logs/redis-server.log
+loglevel notice
+pidfile /var/run/redis/redis-server.pid
+repl-disable-tcp-nodelay no  
+rdbchecksum yes
+rdbcompression yes
+save "" 
+slave-priority 100
+slave-read-only yes 
+slave-serve-stale-data yes 
+slowlog-max-len 128 
+stop-writes-on-bgsave-error yes
+tcp-backlog 511 
+
+{{range gets "/env/*"}}{{$v := .Value}}{{ if gt ( len ( $v ) ) 0 }}{{base .Key}} {{.Value}}
+{{ else }}{{base .Key}} ""
+{{end}}{{end}}
+
+slaveof 127.0.0.1 6379
+
+# rename command 
+rename-command CONFIG e4f0a562e79846a0d3c4b95736e139b068545dbf
+rename-command BGSAVE 2e44dfd54ae333f5c4c3d59dca7a8581c675e1d2
+rename-command DEBUG a83d3276ca450e77c3592492d445d28fffb28239
+rename-command BGREWRITEAOF 01492e79b2fd9e6a691df8358cc7134060af8620
+rename-command SAVE f4cecb83c15c255ef5a26816ad6c955f17d5d04d
+rename-command SHUTDOWN a7ac0214b237815926a11bc47758cdbe64f50deb
+rename-command SLAVEOF 5ac1cc1194668f61557676025dca8a34db3110c4
+
