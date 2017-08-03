@@ -1,0 +1,255 @@
+{
+    "name": {{cluster.name}},
+    "description": {{cluster.description}},
+    "vxnet": {{cluster.vxnet}},
+    "nodes": [{
+        "container": {
+            "type": "kvm",
+            "zone": "pek3a",
+            "image": "img-x1dyvt7q"
+        },
+        "instance_class": {{cluster.node.instance_class}},
+        "count": {{cluster.node.count}},
+        "cpu": 2,
+        "memory": {{cluster.node.memory}},
+        "volume": {
+            "size": {{cluster.node.volume_size}}
+        },
+        "passphraseless" : "ssh-rsa",
+        "services": {
+            "start": {
+                "cmd": "mkdir -p /data/redis/logs; mkdir -p /data/redis/gen; ulimit -n 65536; /opt/redis/app.py start"
+            },
+            "stop": {
+                "cmd": "/opt/redis/app.py stop"
+            },
+            "scale_in": {
+                "cmd" : "/opt/redis/app.py scale_in"
+            },
+            "scale_out" : {
+                "cmd" : "/opt/redis/app.py scale_out"
+             },
+            "destroy": {
+                "cmd" : "/opt/redis/app.py destroy"
+            }
+        }
+    }],
+    "env": {
+        "activerehashing": {{env.activerehashing}},
+        "appendonly": {{env.appendonly}},
+        "appendfsync": {{env.appendfsync}},
+        "hash-max-ziplist-entries": {{env.hash-max-ziplist-entries}},
+        "hash-max-ziplist-value": {{env.hash-max-ziplist-value}},
+        "latency-monitor-threshold": {{env.latency-monitor-threshold}},
+        "list-max-ziplist-entries": {{env.list-max-ziplist-entries}},
+        "list-max-ziplist-value": {{env.list-max-ziplist-value}},
+        "requirepass": {{env.requirepass}},
+        "maxclients": {{env.maxclients}},
+        "maxmemory_portion" : {{env.maxmemory_portion}},
+        "maxmemory-policy": {{env.maxmemory-policy}},
+        "maxmemory-samples": {{env.maxmemory-samples}},
+        "min-slaves-max-lag": {{env.min-slaves-max-lag}},
+        "min-slaves-to-write": {{env.min-slaves-to-write}},
+        "no-appendfsync-on-rewrite": {{env.no-appendfsync-on-rewrite}},
+        "notify-keyspace-events": {{env.notify-keyspace-events}},
+        "repl-backlog-size": {{env.repl-backlog-size}},
+        "repl-backlog-ttl": {{env.repl-backlog-ttl}},
+        "repl-timeout": {{env.repl-timeout}},
+        "set-max-intset-entries": {{env.set-max-intset-entries}},
+        "slowlog-log-slower-than": {{env.slowlog-log-slower-than}},
+        "slowlog-max-len": {{env.slowlog-max-len}},
+        "tcp-keepalive": {{env.tcp-keepalive}},
+        "timeout": {{env.timeout}},
+        "port": {{env.port}},
+        "zset-max-ziplist-entries": {{env.zset-max-ziplist-entries}},
+        "zset-max-ziplist-value": {{env.zset-max-ziplist-value}},
+        "lua-time-limit": {{env.lua-time-limit}},
+        "enable-commands" : {{env.enable-commands}}
+    },
+    "monitor" : {
+        "enable" : true,
+        "cmd" : "/opt/redis/App.py monitor",
+        "items" : {
+            "key_count" : {
+                "unit" : "Times",
+                "value_type" : "int",
+                "statistics_type" : "latest",
+                "scale_factor_when_display" : 1
+            },
+            "get_count" : {
+                "unit" : "Times",
+                "value_type" : "int",
+                "statistics_type" : "delta",
+                "scale_factor_when_display" : 1
+            },
+            "set_count" : {
+                "unit" : "Times",
+                "value_type" : "int",
+                "statistics_type" : "delta",
+                "scale_factor_when_display" : 1
+            },
+            "key_based_count" : {
+                "unit" : "Times",
+                "value_type" : "int",
+                "statistics_type" : "delta",
+                "scale_factor_when_display" : 1
+            },
+            "string_based_count" : {
+                "unit" : "Times",
+                "value_type" : "int",
+                "statistics_type" : "delta",
+                "scale_factor_when_display" : 1
+            },
+            "set_based_count" : {
+                "unit" : "Times",
+                "value_type" : "int",
+                "statistics_type" : "delta",
+                "scale_factor_when_display" : 1
+            },
+            "sorted_set_based_count" : {
+                "unit" : "Times",
+                "value_type" : "int",
+                "statistics_type" : "delta",
+                "scale_factor_when_display" : 1
+            },
+            "list_based_count" : {
+                "unit" : "Times",
+                "value_type" : "int",
+                "statistics_type" : "delta",
+                "scale_factor_when_display" : 1
+            },
+            "hash_based_count" : {
+                "unit" : "Times",
+                "value_type" : "int",
+                "statistics_type" : "delta",
+                "scale_factor_when_display" : 1
+            },
+            "hit_rate_max" : {
+                "unit" : "%",
+                "value_type" : "int",
+                "statistics_type" : "max",
+                "scale_factor_when_display" : 0.1
+            },
+            "hit_rate_min" : {
+                "unit" : "%",
+                "value_type" : "int",
+                "statistics_type" : "min",
+                "scale_factor_when_display" : 0.1
+            },
+            "hit_rate_avg" : {
+                "unit" : "%",
+                "value_type" : "int",
+                "statistics_type" : "avg",
+                "scale_factor_when_display" : 0.1
+            },
+            "keyspace_hits" : {
+                "unit" : "Times",
+                "value_type" : "int",
+                "statistics_type" : "latest",
+                "scale_factor_when_display" : 1
+            },
+            "keyspace_misses" : {
+                "unit" : "Times",
+                "value_type" : "int",
+                "statistics_type" : "latest",
+                "scale_factor_when_display" : 1
+            },
+            "total_connections_received" : {
+                "unit" : "Times",
+                "value_type" : "int",
+                "statistics_type" : "delta",
+                "scale_factor_when_display" : 1
+            },
+            "evicted_keys" : {
+                "unit" : "Times",
+                "value_type" : "int",
+                "statistics_type" : "latest",
+                "scale_factor_when_display" : 1
+            },
+            "expired_keys" : {
+                "unit" : "Times",
+                "value_type" : "int",
+                "statistics_type" : "latest",
+                "scale_factor_when_display" : 1
+            },
+            "connected_clients_min" : {
+                "unit" : "Times",
+                "value_type" : "int",
+                "statistics_type" : "min",
+                "scale_factor_when_display" : 1
+            },
+            "connected_clients_max" : {
+                "unit" : "Times",
+                "value_type" : "int",
+                "statistics_type" : "max",
+                "scale_factor_when_display" : 1
+            },
+            "connected_clients_avg" : {
+                "unit" : "Times",
+                "value_type" : "int",
+                "statistics_type" : "avg",
+                "scale_factor_when_display" : 1
+            },
+            "used_memory" : {
+                "unit" : "MB",
+                "value_type" : "int",
+                "statistics_type" : "latest",
+                "scale_factor_when_display" : 0.000001
+            },
+            "memory_usage_min" : {
+                "unit" : "%",
+                "value_type" : "int",
+                "statistics_type" : "min",
+                "scale_factor_when_display" : 0.01
+            },
+            "memory_usage_avg" : {
+                "unit" : "%",
+                "value_type" : "int",
+                "statistics_type" : "avg",
+                "scale_factor_when_display" : 0.01
+            },
+            "memory_usage_max" : {
+                "unit" : "%",
+                "value_type" : "int",
+                "statistics_type" : "max",
+                "scale_factor_when_display" : 0.01
+            }
+
+        },
+        "groups" : {
+            "Operations" : [ "get_count", "set_count", "key_based_count", "string_based_count"],
+            "Operations2" : [ "set_based_count", "sorted_set_based_count", "list_based_count", "hash_based_count"],
+            "Connections" : ["total_connections_received"],
+            "Connected_clients" : ["connected_clients_min", "connected_clients_max", "connected_clients_avg"],
+            "Keys" : ["evicted_keys", "expired_keys", "key_count"],
+            "Key_hits" : [ "keyspace_hits", "keyspace_misses" ],
+            "Memory_usage" : [ "memory_usage_min", "memory_usage_avg", "memory_usage_max" ],
+            "Hit_rate" : [ "hit_rate_min", "hit_rate_avg", "hit_rate_max" ]
+        },
+        "display" : [ "Memory_usage", "Operations", "Operations2", "Connected_clients", "Connections", "Keys", "Key_hits", "Hit_rate"],
+        "alarm" : ["memory_usage_max", "evicted_keys"]
+
+    },
+    "health_check" : {
+        "enable": true,
+        "interval_sec": 60,
+        "timeout_sec": 10,
+        "action_timeout_sec": 30,
+        "healthy_threshold": 2,
+        "unhealthy_threshold": 2,
+        "check_cmd": "/opt/redis/app.py check",
+        "action_cmd": "/opt/redis/app.py action"
+    },
+    "advanced_actions": ["change_vxnet", "scale_horizontal"],
+    "endpoints": {
+        "client": {
+            "port": {{env.port}},
+            "protocol": "tcp"
+        },
+        "reserved_ips" : {
+            "vip" : {
+                "value" : ""
+            }
+        }
+    }
+}
