@@ -2,11 +2,14 @@
     "name": {{cluster.name}},
     "description": {{cluster.description}},
     "vxnet": {{cluster.vxnet}},
+    "upgrade_policy": ["appv-tse5x72c"],
+    "backup_policy": "device",
+    "incremental_backup_supported": true,
     "nodes": [{
         "container": {
             "type": "kvm",
             "zone": "pek3a",
-            "image": "img-x1dyvt7q"
+            "image": "img-nh6nwhzu"
         },
         "instance_class": {{cluster.node.instance_class}},
         "count": {{cluster.node.count}},
@@ -22,6 +25,12 @@
             },
             "stop": {
                 "cmd": "/opt/redis/app.py stop"
+            },
+            "backup": {
+                "selector": "/opt/redis/app.py select_node",
+                "nodes_to_execute_on": 1,
+                "cmd": "",
+                "timeout": 3600
             },
             "scale_in": {
                 "cmd" : "/opt/redis/app.py scale_in"
@@ -200,19 +209,19 @@
                 "unit" : "%",
                 "value_type" : "int",
                 "statistics_type" : "min",
-                "scale_factor_when_display" : 0.01
+                "scale_factor_when_display" : 1
             },
             "memory_usage_avg" : {
                 "unit" : "%",
                 "value_type" : "int",
                 "statistics_type" : "avg",
-                "scale_factor_when_display" : 0.01
+                "scale_factor_when_display" : 1
             },
             "memory_usage_max" : {
                 "unit" : "%",
                 "value_type" : "int",
                 "statistics_type" : "max",
-                "scale_factor_when_display" : 0.01
+                "scale_factor_when_display" : 1
             }
 
         },
@@ -227,7 +236,7 @@
             "Hit_rate" : [ "hit_rate_min", "hit_rate_avg", "hit_rate_max" ]
         },
         "display" : [ "Memory_usage", "Operations", "Operations2", "Connected_clients", "Connections", "Keys", "Key_hits", "Hit_rate"],
-        "alarm" : ["memory_usage_max", "evicted_keys"]
+        "alarm" : ["memory_usage_max", "evicted_keys", "keyspace_misses", "hit_rate_max", "connected_clients_max"]
 
     },
     "health_check" : {

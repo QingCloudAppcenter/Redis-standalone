@@ -1,4 +1,6 @@
-# Redis standalone on QingCloud AppCenter 
+<p align="center">
+  <img src="./logo.png" alt="Logo" />
+</p>
+<h1 align="center">Redis Standalone on QingCloud AppCenter</h1>
 
-This repo contains all necessary code files for QingCloud AppCenter Redis-standalone app.
-
+- [Product Page](https://appcenter.qingcloud.com/apps/app-zydumbxo)
