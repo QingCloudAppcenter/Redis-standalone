@@ -31,7 +31,8 @@ class App:
         if not os.path.isfile(self.redis_conf_path):
             shutil.copyfile(Constants.DATA_HOME + "/gen/redis.conf", self.redis_conf_path)
 
-        shutil.copyfile(Constants.DATA_HOME + "/gen/sentinel.conf", self.sentinel_conf_path)
+        if not os.path.isfile(self.sentinel_conf_path):
+            shutil.copyfile(Constants.DATA_HOME + "/gen/sentinel.conf", self.sentinel_conf_path)
         
         self.__reconfigure_conf(self.redis_conf_path, redis_conf=True)
         self.__reconfigure_conf(self.sentinel_conf_path, redis_conf=False)
@@ -61,6 +62,10 @@ class App:
                     newline = "sentinel monitor %s %s %s %d\n" % (Constants.REDIS_SENTINEL_NAME, self.config.get_master_ip(), self.config.get_master_port(), quorum)
 
                 elif line.startswith("sentinel rename-")\
+                    or line.startswith("sentinel leader-epoch")\
+                    or line.startswith("sentinel known-slave")
+                    or line.startswith("sentinel config-epoch")\
+                    or line.startswith("sentinel current-epoch")\
                     or line.startswith("sentinel auth-pass"):
                     continue
             output_config.append(newline)
